@@ -1,0 +1,18 @@
+Anime:
+  type: object
+  config:
+    name: Anime
+    description: 'An Anime'
+    fields:
+      malId:
+        type: 'ID!'
+        description: 'Get the associated MyAnimeList ID'
+      title:
+        type: 'String!'
+        description: 'I am the title description'
+      url:
+        type: 'String!'
+        description: 'I am the url description'
+      imageUrl:
+        type: 'String'
+        description: 'I am the imageUrl description'

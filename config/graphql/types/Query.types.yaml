@@ -1,0 +1,14 @@
+Query:
+  type: object
+  config:
+    name: Query
+    fields:
+      animelist:
+        description: 'Get the animelist of a user'
+        type: '[Anime]!'
+        #If you want to use a Relay connection
+        #argsBuilder: Relay::Connection
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Query\\AnimelistResolver", [args])'
+        args:
+          username:
+            type: String!
