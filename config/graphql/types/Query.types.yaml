@@ -12,3 +12,10 @@ Query:
         args:
           username:
             type: String!
+      recommendations:
+        description: 'Get recommendations'
+        type: '[Anime]!'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Query\\RecommendationsResolver", [args])'
+        args:
+          username:
+            type: String!

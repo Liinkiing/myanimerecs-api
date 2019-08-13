@@ -4,6 +4,8 @@
 namespace App\Client;
 
 
+use App\Model\Anime;
+use App\Model\Recommendation;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -28,6 +30,36 @@ class JikanClient
 
         $response = $this->makeRequest("user/$username/animelist", $query);
         return $response->toArray()['anime'];
+    }
+
+    public function anime(int $malId): array
+    {
+        $response = $this->makeRequest("anime/$malId");
+
+        return $response->toArray();
+    }
+
+    public function animeRecommendations(int $malId): array {
+        $response = $this->makeRequest("anime/$malId/recommendations");
+
+        return $response->toArray()['recommendations'];
+    }
+
+    public function batchAnimeRecommendations(array $ids, int $tolerance): array
+    {
+        $requests = [];
+        $responses = [];
+        foreach ($ids as $index => $id) {
+            $requests[] = $this->makeRequest("anime/$id/recommendations");
+            if ($index % $tolerance === 0) {
+                $responses[] = array_map(function (ResponseInterface $response) {
+                    return  $response->toArray();
+                }, $requests);
+                usleep(2000000);
+            }
+        }
+
+        return $responses;
     }
 
     private function makeRequest(string $path, array $query = [], ?string $method = 'GET', ?array $headers = []): ResponseInterface
