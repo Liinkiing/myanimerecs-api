@@ -4,8 +4,7 @@
 namespace App\Client;
 
 
-use App\Model\Anime;
-use App\Model\Recommendation;
+use App\Enum\AnimeListStatus;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -15,22 +14,31 @@ class JikanClient
     public const BASE_URL = 'https://api.jikan.moe/v3/';
 
     private $client;
+    private $requestWaitTime;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, int $requestWaitTime = 0)
     {
         $this->client = $client;
+        $this->requestWaitTime = $requestWaitTime;
     }
 
-    public function userAnimelist(string $username): array
+    public function genre(int $malId): array
+    {
+        $response = $this->makeRequest("genre/anime/$malId");
+        return $response->toArray()['mal_url'];
+    }
+
+    public function userAnimelist(string $username, string $status = ""): array
     {
         $query = [
             'order_by' => 'score',
             'sort' => 'desc'
         ];
 
-        $response = $this->makeRequest("user/$username/animelist", $query);
+        $response = $this->makeRequest("user/$username/animelist/$status", $query);
         return $response->toArray()['anime'];
     }
+
 
     public function anime(int $malId): array
     {
@@ -52,7 +60,7 @@ class JikanClient
         foreach ($ids as $index => $id) {
             $requests[] = $this->makeRequest("anime/$id/recommendations");
             if ($index % $tolerance === 0) {
-                $responses[] = array_map(function (ResponseInterface $response) {
+                $responses[] = array_map(static function (ResponseInterface $response) {
                     return  $response->toArray();
                 }, $requests);
                 usleep(2000000);
@@ -64,11 +72,25 @@ class JikanClient
 
     private function makeRequest(string $path, array $query = [], ?string $method = 'GET', ?array $headers = []): ResponseInterface
     {
-        $options = array_merge(
+        $headers = array_merge(
             $headers,
-            compact('query')
+            [
+                'User-Agent' => random_user_agent()
+            ]
         );
-
+        $options = array_merge(
+            compact('headers'),
+            compact('query'),
+            [
+                'buffer' => false,
+                'extra' => [
+                    'no_cache' => true
+                ]
+            ]
+        );
+        if ($this->requestWaitTime > 0) {
+            usleep($this->requestWaitTime * 1000);
+        }
         return $this->client->request($method, $this->endpoint($path), $options);
     }
 

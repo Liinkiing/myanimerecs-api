@@ -77,7 +77,7 @@ class RecommendationsResolver implements ResolverInterface
         $recommendedAnimesIds = [];
         foreach($recommendationsByAnime as $animeId => $recommendations) {
             $recommendedAnimesIds[] = array_map(static function (RecommentationEntity $recommendation) {
-               return $recommendation->getRelated()->getMalId();
+               return $recommendation->getRecommended()->getMalId();
             }, $recommendations);
         }
 
@@ -108,7 +108,7 @@ class RecommendationsResolver implements ResolverInterface
         );
         if (!$entity) {
             $entity = (RecommentationEntity::fromModel($recommendation))
-                ->setRelated($related);
+                ->setRecommended($related);
             $this->em->persist(
                 $entity
             );

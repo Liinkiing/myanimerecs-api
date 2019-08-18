@@ -22,7 +22,13 @@ class Recommendation implements EntityApiModel
      * @ORM\ManyToOne(targetEntity="App\Entity\Anime", inversedBy="recommendations")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $related;
+    private $anime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Anime", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recommended;
 
     /**
      * @ORM\Column(type="integer")
@@ -34,14 +40,14 @@ class Recommendation implements EntityApiModel
         return $this->id;
     }
 
-    public function getRelated(): ?Anime
+    public function getRecommended(): ?Anime
     {
-        return $this->related;
+        return $this->recommended;
     }
 
-    public function setRelated(?Anime $related): self
+    public function setRecommended(?Anime $recommended): self
     {
-        $this->related = $related;
+        $this->recommended = $recommended;
 
         return $this;
     }
@@ -70,5 +76,17 @@ class Recommendation implements EntityApiModel
         }
 
         throw new InvalidModelException();
+    }
+
+    public function getAnime(): ?Anime
+    {
+        return $this->anime;
+    }
+
+    public function setAnime(?Anime $anime): self
+    {
+        $this->anime = $anime;
+
+        return $this;
     }
 }
