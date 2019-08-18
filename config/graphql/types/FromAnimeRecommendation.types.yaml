@@ -1,0 +1,12 @@
+FromAnimeRecommendation:
+  type: object
+  config:
+    name: FromAnimeRecommendation
+    description: 'An Anime recommendation from a viewer perspective that explain why an anime has been recommended'
+    fields:
+      anime:
+        type: 'Anime!'
+        description: 'Get the anime that made this recommendation relevant'
+      score:
+        type: 'Int!'
+        description: 'The higher the score is, the higher it will be recommended'

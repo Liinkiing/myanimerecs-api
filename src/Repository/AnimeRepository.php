@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Anime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +21,51 @@ class AnimeRepository extends ServiceEntityRepository
         parent::__construct($registry, Anime::class);
     }
 
-    // /**
-    //  * @return Anime[] Returns an array of Anime objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param array $malIds
+     * @return Anime[]|Collection<int, Anime>
+     */
+    public function findByAnimeList(array $malIds): Collection
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('a');
 
-    /*
-    public function findOneBySomeField($value): ?Anime
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $qb
+            ->select('a', 'recommendations', 'recommended')
+            ->leftJoin(
+                'a.recommendations', 'recommendations'
+            )
+            ->leftJoin('recommendations.recommended', 'recommended')
+            ->andWhere(
+                $qb->expr()->in('a.malId', ':ids')
+            )
+            ->addOrderBy(
+                'FIELD(a.malId, :ids)'
+            )
+            ->setParameter('ids', $malIds)
+            ->getQuery();
+
+        return new ArrayCollection($query->getResult());
     }
-    */
+
+
+    /**
+     * @param array $malIds
+     * @return Anime[]|Collection<int, Anime>
+     */
+    public function findByOrderedMalIds(array $malIds): Collection
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $query = $qb
+            ->andWhere(
+                $qb->expr()->in('a.malId', ':malIds')
+            )
+            ->addOrderBy(
+                'FIELD(a.malId, :malIds)'
+            )
+            ->setParameter('malIds', $malIds)
+            ->getQuery();
+
+        return new ArrayCollection($query->getResult());
+    }
 }

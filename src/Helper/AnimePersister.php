@@ -45,8 +45,6 @@ class AnimePersister
             );
 
             $entity = Anime::fromModel($animeFromApi);
-            $this->em->persist($entity);
-            $this->em->flush();
 
             $animeFromApi->getGenres()
                 ->map(function (Genre $genreFromApi) {
@@ -98,10 +96,7 @@ class AnimePersister
 
     protected function reflectScalarFieldsDifferences(Anime $entity, \App\Model\Anime $model): void
     {
-        try {
-            $reflection = new \ReflectionClass($entity);
-        } catch (\ReflectionException $e) {
-        }
+        $reflection = new \ReflectionClass($entity);
         $excludedMethods = [
             'getters' => ['getId', 'getGenres', 'getRecommendations', 'getFromAnimeRecommendations'],
             'setters' => ['setId', 'setGenres', 'setRecommendations', 'setFromAnimeRecommendations']

@@ -28,7 +28,7 @@ class JikanClient
         return $response->toArray()['mal_url'];
     }
 
-    public function userAnimelist(string $username, string $status = ""): array
+    public function userAnimelist(string $username, string $status = AnimeListStatus::ALL): array
     {
         $query = [
             'order_by' => 'score',
@@ -39,6 +39,15 @@ class JikanClient
         return $response->toArray()['anime'];
     }
 
+    public function asyncUserAnimelist(string $username, string $status = AnimeListStatus::ALL): ResponseInterface
+    {
+        $query = [
+            'order_by' => 'score',
+            'sort' => 'desc'
+        ];
+
+        return $this->makeRequest("user/$username/animelist/$status", $query);
+    }
 
     public function anime(int $malId): array
     {

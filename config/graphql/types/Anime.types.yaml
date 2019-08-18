@@ -5,14 +5,22 @@ Anime:
     description: 'An Anime'
     fields:
       malId:
-        type: 'ID!'
+        type: 'ID'
         description: 'Get the associated MyAnimeList ID'
       title:
-        type: 'String!'
+        type: 'String'
         description: 'I am the title description'
       url:
-        type: 'String!'
+        type: 'String'
         description: 'I am the url description'
       imageUrl:
         type: 'String'
         description: 'I am the imageUrl description'
+      from:
+        type: '[FromAnimeRecommendation!]!'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\AnimeFromResolver", [value, args])'
+        description: 'Get a list of anime recommendations that explains why the anime has been recommended.'
+        args:
+          first:
+            type: 'Int'
+            defaultValue: 3
