@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\Collection;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -33,14 +34,16 @@ class RecommendationsResolver implements ResolverInterface
     private $logger;
     private $cache;
     private $cacheTtl;
+    private $bus;
 
-    public function __construct(JikanClient $client, AnimeRepository $animeRepository, LoggerInterface $logger, CacheInterface $cache, int $cacheTtl)
+    public function __construct(JikanClient $client, MessageBusInterface $bus, AnimeRepository $animeRepository, LoggerInterface $logger, CacheInterface $cache, int $cacheTtl)
     {
         $this->client = $client;
         $this->animeRepository = $animeRepository;
         $this->logger = $logger;
         $this->cache = $cache;
         $this->cacheTtl = $cacheTtl;
+        $this->bus = $bus;
     }
 
     private function mapResponseFromAnimeList(array $responseFromApi): array
@@ -82,7 +85,11 @@ class RecommendationsResolver implements ResolverInterface
             })->toArray();
 
             $diff = array_diff($malIds, $idsInDb);
-            //TODO: Add async task to handle fetching of new animes
+            if (count($diff) > 0) {
+                $this->bus->dispatch(
+                    new AddInexistingAnimes($diff)
+                );
+            }
             /** @var ArrayCollection<int, Recommendation> $recommendations */
             $recommendations = $this->getAnimeRecommendationsBasedOnAnimelist($animes, $animelist);
 

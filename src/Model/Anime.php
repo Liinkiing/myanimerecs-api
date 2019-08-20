@@ -37,6 +37,7 @@ class Anime implements ApiModel
 
     public static function fromApi(array $response): self
     {
+        //TODO: Handle case when mal_id is not defined
         return new self(
             (int)$response['mal_id'],
             $response['title'],

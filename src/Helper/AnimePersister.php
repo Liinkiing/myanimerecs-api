@@ -177,13 +177,13 @@ class AnimePersister
         } catch (ClientException $exception) {
             if ($exception->getCode() === Response::HTTP_TOO_MANY_REQUESTS) {
                 $this->logger->warning('429 when trying to fetch anime with ID ' . $malId);
-                if ($retryCount >= 5) {
+                if ($retryCount >= 100) {
                     return null;
                 }
                 if ($io) {
-                    $io->writeln("<info>Too many requests. Retrying request ($retryCount + 1/5)</info>");
+                    $io->writeln('<info>Too many requests. Retrying request (' . ($retryCount + 1) . '/100)</info>');
                 }
-                return $this->addMyAnimeListAnime($malId, $io, $force, $update, $retryCount);
+                return $this->addMyAnimeListAnime($malId, $io, $force, $update, $retryCount + 1);
             }
             if ($exception->getCode() === Response::HTTP_NOT_FOUND) {
                 $this->logger->warning('404 when trying to fetch anime with ID ' . $malId);
