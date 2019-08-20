@@ -23,7 +23,7 @@ class RecommendationsResolver implements ResolverInterface
 
     public const CACHE_KEY = 'recommendations_resolver.results';
     public const RECOMMENDATIONS_COUNT_WEIGHT = 1.7;
-    public const USER_SCORE_WEIGHT = 4;
+    public const USER_SCORE_WEIGHT = 6;
 
     private const SAMPLE_RATE = 0.5;
     private const MAX_ANIME = 500;
