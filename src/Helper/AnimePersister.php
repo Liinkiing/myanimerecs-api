@@ -8,6 +8,7 @@ use App\Client\JikanClient;
 use App\Entity\Anime;
 use App\Entity\Recommendation;
 use App\Entity\Recommendation as RecommendationEntity;
+use App\Exception\UnknownMalAnimeException;
 use App\Model\Genre;
 use App\Model\Recommendation as RecommendationModel;
 use App\Repository\AnimeRepository;
@@ -190,6 +191,9 @@ class AnimePersister
                 return null;
             }
 
+            return null;
+        } catch (UnknownMalAnimeException $exception) {
+            $this->logger->warning('No mal_id found in this request. Skipping it.');
             return null;
         }
     }

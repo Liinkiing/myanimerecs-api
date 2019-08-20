@@ -4,6 +4,7 @@
 namespace App\Model;
 
 
+use App\Exception\UnknownMalAnimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -37,7 +38,9 @@ class Anime implements ApiModel
 
     public static function fromApi(array $response): self
     {
-        //TODO: Handle case when mal_id is not defined
+        if (!isset($response['mal_id'])) {
+            throw new UnknownMalAnimeException();
+        }
         return new self(
             (int)$response['mal_id'],
             $response['title'],
