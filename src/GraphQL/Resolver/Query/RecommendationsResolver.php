@@ -122,7 +122,7 @@ class RecommendationsResolver implements ResolverInterface
             return $recommendedItem['recommendation_score'];
         }, $recommended);
 
-        return max($scores);
+        return count($scores) > 0 ? max($scores) : 0;
     }
 
     protected function mapResultsWithViewerFromRecommendations(Collection $results, Collection $animes, array $recommended, float $maxScore): Collection

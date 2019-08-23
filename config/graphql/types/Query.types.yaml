@@ -5,7 +5,7 @@ Query:
     fields:
       animelist:
         description: 'Get the animelist of a user'
-        type: '[Anime]!'
+        type: '[Anime!]!'
         #If you want to use a Relay connection
         #argsBuilder: Relay::Connection
         resolve: '@=resolver("App\\GraphQL\\Resolver\\Query\\AnimelistResolver", [args])'
@@ -14,7 +14,7 @@ Query:
             type: String!
       recommendations:
         description: 'Get recommendations'
-        type: '[Anime]!'
+        type: '[Anime!]!'
         resolve: '@=resolver("App\\GraphQL\\Resolver\\Query\\RecommendationsResolver", [args])'
         args:
           username:
