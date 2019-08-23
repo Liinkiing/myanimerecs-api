@@ -198,11 +198,6 @@ class RecommendationsResolver implements ResolverInterface
                 return $r->getRecommended()->getMalId() === $recommendation->getRecommended()->getMalId();
             })->count();
 
-        //$this->logger->info('Because you watched ' . $recommendation->getAnime()->getTitle() . ', you should like ' .
-        //    $recommendation->getRecommended()->getTitle() . ' because it has been recommended ' .
-        //    $recommendation->getRecommendationCount() . ' times and appears ' . $occurrences . ' times'
-        //);
-
         //$this->logger->info($recommendation->getRecommended()->getTitle() . ' appears ' .
         //    $occurrences . ' times in all recommendations and has been recommended ' .
         //    $recommendation->getRecommendationCount() . ' times'
@@ -218,6 +213,11 @@ class RecommendationsResolver implements ResolverInterface
 
         $animeUserScore = count($animeUserScore) > 0 ? $animeUserScore[0]['user_score'] : 0;
         $score = ($animeUserScore ** self::USER_SCORE_WEIGHT + ($recommendation->getRecommendationCount() ** self::RECOMMENDATIONS_COUNT_WEIGHT)) * $occurrences;
+
+        //$this->logger->info('Because you watched ' . $recommendation->getAnime()->getTitle() . ', you should like ' .
+        //    $recommendation->getRecommended()->getTitle() . ' because it has been recommended ' .
+        //    $recommendation->getRecommendationCount() . ' times and appears ' . $occurrences . ' times' . ($animeUserScore > 0 ? ' and you have given a note of ' . $animeUserScore . ' for ' . $recommendation->getAnime()->getTitle() : '')
+        //);
 
         return $score;
     }
