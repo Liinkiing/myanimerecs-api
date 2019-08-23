@@ -99,8 +99,8 @@ class AnimePersister
     {
         $reflection = new \ReflectionClass($entity);
         $excludedMethods = [
-            'getters' => ['getId', 'getGenres', 'getRecommendations', 'getFromAnimeRecommendations'],
-            'setters' => ['setId', 'setGenres', 'setRecommendations', 'setFromAnimeRecommendations']
+            'getters' => ['getId', 'getGenres', 'getRecommendations', 'getRelatedAnimeRecommendations'],
+            'setters' => ['setId', 'setGenres', 'setRecommendations', 'setRelatedAnimeRecommendations']
         ];
 
         $entityGettersSetters = array_reduce(

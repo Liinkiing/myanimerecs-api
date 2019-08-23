@@ -7,7 +7,7 @@ use App\Entity\Anime;
 use App\Entity\Recommendation;
 use App\Enum\AnimeListItemWatchingStatus;
 use App\Message\AddInexistingAnimes;
-use App\Model\FromAnimeRecommendation;
+use App\Model\RelatedAnimeRecommendation;
 use App\Repository\AnimeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -146,11 +146,11 @@ class RecommendationsResolver implements ResolverInterface
                         );
                         $score = count($score) > 0 ? $score[0]['recommendation_score'] : 0;
                         $score = (int)map_numbers(sqrt($score), 0, sqrt($maxScore), 0, 100);
-                        $fromRecommendation = new FromAnimeRecommendation(
+                        $fromRecommendation = new RelatedAnimeRecommendation(
                             $animeFromMyAnimeList,
                             $score
                         );
-                        $anime->addFromAnimeRecommendation($fromRecommendation);
+                        $anime->addRelatedAnimeRecommendation($fromRecommendation);
                     }
                 });
             return $anime;

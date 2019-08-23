@@ -16,9 +16,9 @@ Anime:
       imageUrl:
         type: 'String'
         description: 'I am the imageUrl description'
-      from:
-        type: '[FromAnimeRecommendation!]!'
-        resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\AnimeFromResolver", [value, args])'
+      related:
+        type: '[RelatedAnimeRecommendation!]!'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\RelatedAnimeRecommendationsResolver", [value, args])'
         description: 'Get a list of anime recommendations that explains why the anime has been recommended.'
         args:
           first:

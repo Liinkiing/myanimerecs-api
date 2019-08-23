@@ -8,7 +8,7 @@ namespace App\Model;
  * @see \App\Entity\Anime::$from
  * This class is used to explain why an anime has been recommended by showing the anime that led to the recommendation and a score
  */
-class FromAnimeRecommendation
+class RelatedAnimeRecommendation
 {
     public const MIN_SCORE_TO_SHOW = 10;
 

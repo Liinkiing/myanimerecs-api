@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Exception\InvalidModelException;
 use App\Model\ApiModel;
-use App\Model\FromAnimeRecommendation;
+use App\Model\RelatedAnimeRecommendation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -103,10 +103,10 @@ class Anime implements EntityApiModel
     private $malId;
 
     /**
-     * @see FromAnimeRecommendation Not used by Doctrine, but to extends the entity from a viewer perspective by showing him
+     * @see RelatedAnimeRecommendation Not used by Doctrine, but to extends the entity from a viewer perspective by showing him
      * where do the recommendation came from
      */
-    private $fromAnimeRecommendations;
+    private $relatedAnimeRecommendations;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -196,7 +196,7 @@ class Anime implements EntityApiModel
     public function __construct()
     {
         $this->recommendations = new ArrayCollection();
-        $this->fromAnimeRecommendations = new ArrayCollection();
+        $this->relatedAnimeRecommendations = new ArrayCollection();
         $this->genres = new ArrayCollection();
     }
 
@@ -351,32 +351,32 @@ class Anime implements EntityApiModel
     }
 
     /**
-     * @return Collection<int, FromAnimeRecommendation>
+     * @return Collection<int, RelatedAnimeRecommendation>
      */
-    public function getFromAnimeRecommendations(): Collection
+    public function getRelatedAnimeRecommendations(): Collection
     {
-        return $this->fromAnimeRecommendations ?? new ArrayCollection([]);
+        return $this->relatedAnimeRecommendations ?? new ArrayCollection([]);
     }
 
-    public function addFromAnimeRecommendation(FromAnimeRecommendation $item): self
+    public function addRelatedAnimeRecommendation(RelatedAnimeRecommendation $item): self
     {
-        if (!$this->fromAnimeRecommendations) {
-            $this->fromAnimeRecommendations = new ArrayCollection([]);
+        if (!$this->relatedAnimeRecommendations) {
+            $this->relatedAnimeRecommendations = new ArrayCollection([]);
         }
-        if (!$this->fromAnimeRecommendations->contains($item)) {
-            $this->fromAnimeRecommendations->add($item);
+        if (!$this->relatedAnimeRecommendations->contains($item)) {
+            $this->relatedAnimeRecommendations->add($item);
         }
 
         return $this;
     }
 
-    public function removeFromAnimeRecommendation(FromAnimeRecommendation $item): self
+    public function removeRelatedAnimeRecommendation(RelatedAnimeRecommendation $item): self
     {
-        if (!$this->fromAnimeRecommendations) {
-            $this->fromAnimeRecommendations = new ArrayCollection([]);
+        if (!$this->relatedAnimeRecommendations) {
+            $this->relatedAnimeRecommendations = new ArrayCollection([]);
         }
-        if ($this->fromAnimeRecommendations->contains($item)) {
-            $this->fromAnimeRecommendations->removeElement($item);
+        if ($this->relatedAnimeRecommendations->contains($item)) {
+            $this->relatedAnimeRecommendations->removeElement($item);
         }
 
         return $this;

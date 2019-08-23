@@ -1,7 +1,7 @@
-FromAnimeRecommendation:
+RelatedAnimeRecommendation:
   type: object
   config:
-    name: FromAnimeRecommendation
+    name: RelatedAnimeRecommendations
     description: 'An Anime recommendation from a viewer perspective that explain why an anime has been recommended'
     fields:
       anime:
