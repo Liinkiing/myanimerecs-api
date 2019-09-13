@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Exception\InvalidModelException;
 use App\Model\ApiModel;
 use App\Model\RelatedAnimeRecommendation;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -193,6 +194,11 @@ class Anime implements EntityApiModel
      */
     private $broadcast;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bannerImageUrl;
+
     public function __construct()
     {
         $this->recommendations = new ArrayCollection();
@@ -215,6 +221,12 @@ class Anime implements EntityApiModel
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())
+            ->slugify($this->title . ' ' . ($this->malId ?? 0));
     }
 
     public function getDescription(): ?string
@@ -584,6 +596,18 @@ class Anime implements EntityApiModel
     public function setBroadcast(?string $broadcast): self
     {
         $this->broadcast = $broadcast;
+
+        return $this;
+    }
+
+    public function getBannerImageUrl(): ?string
+    {
+        return $this->bannerImageUrl;
+    }
+
+    public function setBannerImageUrl(?string $bannerImageUrl): self
+    {
+        $this->bannerImageUrl = $bannerImageUrl;
 
         return $this;
     }

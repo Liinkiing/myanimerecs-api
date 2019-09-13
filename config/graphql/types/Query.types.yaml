@@ -19,3 +19,13 @@ Query:
         args:
           username:
             type: String!
+          first:
+            type: Int
+            defaultValue: 100
+      anime:
+        description: 'Get anime by its slug'
+        type: 'Anime'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Query\\AnimeResolver", [args])'
+        args:
+          slug:
+            type: String!

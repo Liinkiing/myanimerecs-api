@@ -52,7 +52,7 @@ class AnimeRepository extends ServiceEntityRepository
      * @param array $malIds
      * @return Anime[]|Collection<int, Anime>
      */
-    public function findByOrderedMalIds(array $malIds): Collection
+    public function findByOrderedMalIds(array $malIds, int $first): Collection
     {
         $qb = $this->createQueryBuilder('a');
 
@@ -64,6 +64,7 @@ class AnimeRepository extends ServiceEntityRepository
                 'FIELD(a.malId, :malIds)'
             )
             ->setParameter('malIds', $malIds)
+            ->setMaxResults($first)
             ->getQuery();
 
         return new ArrayCollection($query->getResult());

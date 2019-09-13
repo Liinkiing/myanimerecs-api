@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/doctrineextensions": "^1.2",
+        "cocur/slugify": "^3.2",
         "liinkiing/graphql-maker-bundle": "^1.2",
         "nelmio/cors-bundle": "^1.5",
         "overblog/graphql-bundle": "^0.12.1",

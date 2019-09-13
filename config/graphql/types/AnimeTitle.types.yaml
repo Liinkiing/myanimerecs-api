@@ -1,0 +1,9 @@
+AnimeTitle:
+  type: object
+  config:
+    name: AnimeTitle
+    fields:
+      english:
+        type: 'String'
+      japanese:
+        type: 'String!'

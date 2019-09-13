@@ -8,14 +8,14 @@ Anime:
         type: 'ID'
         description: 'Get the associated MyAnimeList ID'
       title:
-        type: 'String'
-        description: 'I am the title description'
+        type: 'AnimeTitle!'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\AnimeTitleResolver", [value])'
       url:
         type: 'String'
-        description: 'I am the url description'
       imageUrl:
         type: 'String'
-        description: 'I am the imageUrl description'
+      bannerImageUrl:
+        type: 'String'
       related:
         type: '[RelatedAnimeRecommendation!]!'
         resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\RelatedAnimeRecommendationsResolver", [value, args])'
@@ -24,3 +24,35 @@ Anime:
           first:
             type: 'Int'
             defaultValue: 3
+      description:
+        type: 'String'
+      slug:
+        type: 'String!'
+      episodesCount:
+        type: 'Int!'
+      airing:
+        type: 'Boolean!'
+      score:
+        type: 'Float!'
+      trailerUrl:
+        type: 'String'
+      status:
+        type: 'String!'
+      duration:
+        type: 'String'
+      rating:
+        type: 'String!'
+      synonyms:
+        type: '[String!]!'
+      type:
+        type: 'String!'
+      rank:
+        type: 'Int!'
+      popularity:
+        type: 'Int!'
+      openingThemes:
+        type: '[String!]!'
+      endingThemes:
+        type: '[String!]!'
+      broadcast:
+        type: 'String'

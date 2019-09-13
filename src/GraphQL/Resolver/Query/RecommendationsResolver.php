@@ -64,9 +64,9 @@ class RecommendationsResolver implements ResolverInterface
 
     public function __invoke(Argument $args)
     {
-        $username = $args->offsetGet('username');
+        [$username, $first] = [$args->offsetGet('username'), $args->offsetGet('first')];
 
-        return $this->cache->get(self::CACHE_KEY. '.' . $username, function (ItemInterface $item) use ($username) {
+        return $this->cache->get(self::CACHE_KEY. '.' . $username . $first, function (ItemInterface $item) use ($first, $username) {
             $item->expiresAfter($this->cacheTtl);
 
             $animelist = array_map([$this, 'mapResponseFromAnimeList'], $this->client->userAnimelist($username));
@@ -108,7 +108,7 @@ class RecommendationsResolver implements ResolverInterface
             );
 
             return $this->mapResultsWithViewerFromRecommendations(
-                $this->animeRepository->findByOrderedMalIds($recommendedIds),
+                $this->animeRepository->findByOrderedMalIds($recommendedIds, $first),
                 $animes,
                 $recommended,
                 $max
