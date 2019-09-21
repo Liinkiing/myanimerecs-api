@@ -4,6 +4,6 @@ AnimeTitle:
     name: AnimeTitle
     fields:
       english:
-        type: 'String'
+        type: 'String!'
       japanese:
         type: 'String!'
