@@ -1,0 +1,7 @@
+framework:
+  http_client:
+    scoped_clients:
+      tvdb.client:
+        headers: { 'Accept-Language': 'en' }
+        auth_bearer: '%env(resolve:TVDB_JWT_TOKEN)%'
+        base_uri: 'https://api.thetvdb.com'

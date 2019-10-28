@@ -397,6 +397,9 @@
     "symfony/yaml": {
         "version": "v4.3.3"
     },
+    "tightenco/collect": {
+        "version": "v6.4.0"
+    },
     "twig/twig": {
         "version": "v2.11.3"
     },

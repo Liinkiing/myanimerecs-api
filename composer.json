@@ -20,10 +20,11 @@
         "symfony/messenger": "4.3.*",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
-        "symfony/var-dumper": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "tightenco/collect": "^6.4"
     },
     "require-dev": {
+        "symfony/var-dumper": "4.3.*",
         "overblog/graphiql-bundle": "^0.1.2"
     },
     "config": {

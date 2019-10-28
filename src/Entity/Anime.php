@@ -199,6 +199,16 @@ class Anime implements EntityApiModel
      */
     private $bannerImageUrl;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $posterImageUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $backgroundImageUrl;
+
     public function __construct()
     {
         $this->recommendations = new ArrayCollection();
@@ -608,6 +618,30 @@ class Anime implements EntityApiModel
     public function setBannerImageUrl(?string $bannerImageUrl): self
     {
         $this->bannerImageUrl = $bannerImageUrl;
+
+        return $this;
+    }
+
+    public function getPosterImageUrl(): ?string
+    {
+        return $this->posterImageUrl;
+    }
+
+    public function setPosterImageUrl(?string $posterImageUrl): self
+    {
+        $this->posterImageUrl = $posterImageUrl;
+
+        return $this;
+    }
+
+    public function getBackgroundImageUrl(): ?string
+    {
+        return $this->backgroundImageUrl;
+    }
+
+    public function setBackgroundImageUrl(?string $backgroundImageUrl): self
+    {
+        $this->backgroundImageUrl = $backgroundImageUrl;
 
         return $this;
     }
