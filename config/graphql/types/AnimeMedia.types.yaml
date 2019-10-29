@@ -1,0 +1,12 @@
+AnimeMedia:
+  type: object
+  config:
+    name: AnimeMedia
+    description: 'Get an anime media'
+    fields:
+      background:
+        type: 'String!'
+      banner:
+        type: 'String'
+      poster:
+        type: 'String'

@@ -12,10 +12,9 @@ Anime:
         resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\AnimeTitleResolver", [value])'
       url:
         type: 'String'
-      imageUrl:
-        type: 'String'
-      bannerImageUrl:
-        type: 'String'
+      media:
+        type: 'AnimeMedia!'
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\AnimeMediaResolver", [value])'
       related:
         type: '[RelatedAnimeRecommendation!]!'
         resolve: '@=resolver("App\\GraphQL\\Resolver\\Anime\\RelatedAnimeRecommendationsResolver", [value, args])'

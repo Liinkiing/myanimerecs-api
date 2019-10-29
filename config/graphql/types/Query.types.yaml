@@ -19,9 +19,12 @@ Query:
         args:
           username:
             type: String!
-          first:
+          offset:
             type: Int
-            defaultValue: 100
+            defaultValue: 0
+          limit:
+            type: Int
+            defaultValue: 10
       anime:
         description: 'Get anime by its slug'
         type: 'Anime'
