@@ -38,13 +38,13 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        }
+        },
+        "files": ["src/functions.php"]
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/"
-        },
-        "files": ["src/functions.php"]
+        }
     },
     "replace": {
         "paragonie/random_compat": "2.*",
